@@ -9,4 +9,5 @@
 !*.h
 !*.md
 !*.txt
+!testcase*.txt
 !.gitignore
