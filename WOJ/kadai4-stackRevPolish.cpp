@@ -20,9 +20,10 @@ void showStack(){
     
     while(!substack.empty()){
         int temp = substack.top();
-        printf("%d ", temp);
+        printf("%d", temp);
         substack.pop();
         numstack.push(temp);
+        if(!substack.empty())printf(" ");
     }
     printf("\n");
 }

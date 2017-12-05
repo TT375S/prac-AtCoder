@@ -38,9 +38,10 @@ void showQue(){
     }
     while(!subq.empty()){
         p tempP = subq.front();
-        printf("%s %d ", tempP.first.c_str(), tempP.second);
+        printf("%s %d", tempP.first.c_str(), tempP.second);
         subq.pop();
         pque.push(tempP);
+        if(!subq.empty()) printf(" ");
     }
     if(!isEmpty) printf("\n");
 }
