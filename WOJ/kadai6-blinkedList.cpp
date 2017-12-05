@@ -38,12 +38,34 @@ void insert(  type item){
         tail = newNode; 
         if(isDebug) printf("FIRST ONE CREATED\n");
     }
+    //初めの1個じゃないなら、普通にheadの前に付けるだけ
     else{ 
         head->prev = newNode;
         if(isDebug) printf("NOT FIRST ONE CREATED\n");
     }
     
     head = newNode;
+}
+
+void insertLast(  type item){
+    bl_node *newNode = (bl_node *)malloc(sizeof(bl_node));
+    newNode->item = item;
+    newNode->next = &boundNode;
+    newNode->prev = tail;
+    
+
+    //初めの1個のときだけ、headもtailも同じものを指す
+    if(tail==&boundNode){ 
+        head = newNode;
+        if(isDebug) printf("FIRST ONE CREATED in insertLast\n");
+    }
+    //初めの1個じゃないなら、普通にtailの後に付けるだけ
+    else{ 
+        tail->next = newNode;
+        if(isDebug) printf("NOT FIRST ONE CREATED in insertLast\n");
+    }
+    //最後尾が新しいノードとなる
+    tail = newNode;
 }
 
 void deleteItem(type item){
@@ -121,25 +143,46 @@ void solve(){
 
         //コマンドをいちいちcompareで全文比較していると時間かかるので、5文字目と6文字目だけ見てどのコマンドか調べる
         type item;
-        if(command[5] == 't'){
-            if(isDebug) printf("insert\n");
+        //"insertFirst"
+        if(command[5] == 't' && command[6] == 'F'){
+            if(isDebug) printf("insertFirst\n");
             scanf("%d%*c", &item);
             if(isDebug)printf("item %d\n", item);
             insert(item);
-        }else if(command[6] == '\0'){
+        }
+        //"insertLast"
+        else if(command[5] == 't' && command[6] == 'L'){
+            if(isDebug) printf("insertLast\n");
+            scanf("%d%*c", &item);
+            if(isDebug)printf("item %d\n", item);
+            insertLast(item);
+        }
+        //"delete..."
+        else if(command[6] == '\0'){
             if(isDebug) printf("delete\n");
             scanf("%d%*c", &item);
             if(isDebug)printf("item %d\n", item);
             deleteItem(item);
-        }else if(command[6] == 'F'){
+        }
+        //"deleteFirst..."
+        else if(command[6] == 'F'){
             if(isDebug) printf("deleteFirst\n");
             deleteFirst();
-        }else if(command[6] == 'L'){
+        }
+        //"deleteLast..."
+        else if(command[6] == 'L'){
             if(isDebug) printf("deleteLast\n");
             deleteLast();
-        }else{
+        }
+        //"deleteAll..."
+        else if(command[6] == 'A'){
+            if(isDebug) printf("deleteAll\n");
+            init();    //メモリを解放すべきだがしていない
+        }
+        else{
             printf("COMMAND ANOMALY\n");
         }
+        if(isDebug) printf("trace\n");
         if(isDebug) traceHE();
         if(isDebug) printf("\n");
     }
