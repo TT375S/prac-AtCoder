@@ -75,7 +75,8 @@ void solve(){
     while(!finQ.empty()){
         p tempP = finQ.front();
         finQ.pop();
-        printf("%s %d ", tempP.first.c_str(), tempP.second);
+        printf("%s %d", tempP.first.c_str(), tempP.second);
+        if(!finQ.empty())printf(" ");
     }
     printf("\n");
 }
@@ -85,4 +86,3 @@ int main(){
     solve();
     return 0;
 }
-
