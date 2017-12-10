@@ -17,6 +17,7 @@
 #include <utility>
 #include <stdlib.h>
 #include <string.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -102,18 +103,15 @@ int main() {
 
 		//long long lines = 1000;
 		long long lines = m - 2 * n;
-
+		sort(usedEdgeIndexList.begin(), usedEdgeIndexList.end());
 		//未使用の弧を削除する
 		for (long long i_e = 0; i_e < m; i_e++) {
-			if(!vector_finder(usedEdgeIndexList, i_e)){
-				if(lines >= 1){
+			if(lines <= 0) break;
+			if(!binary_search(usedEdgeIndexList.begin(), usedEdgeIndexList.end(), i_e) ){
 					lines--;
 					printf("%lld %lld\n", edgeList[i_e].from+1, edgeList[i_e].to+1);
-				}
 			}
 		}
-
-
 	}
 	return 0;
 }
