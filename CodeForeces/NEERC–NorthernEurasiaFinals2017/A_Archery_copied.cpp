@@ -33,7 +33,7 @@ int n, m, x[MAXN], y[MAXN], opt[MAXN], l[MAXN << 1];
 //X=座標圧縮後のx座標のインデックス、S[X]はx=X?の直線と交わる円たち(のクエリ行インデックス)をもつ順列つき集合。
 set <int> s[MAXN << 3];
 
-//x=検索開始位置、[l,r]=対象区間l,r, [q,l]=クエリ区間ql, qr, v=挿入したいクエリ行インデックス
+//x=検索開始ノードインデックス、[l,r]=対象区間l,r, [q,l]=クエリ区間ql, qr, v=挿入したいクエリ行インデックス
 inline void Insert(int x, int l, int r, int ql, int qr, int v)
 {
     //そのノードがクエリ区間とピッタリ一致する    
@@ -53,7 +53,7 @@ inline void Insert(int x, int l, int r, int ql, int qr, int v)
         Insert(x << 1, l, mid, ql, mid, v), Insert(x << 1 | 1, mid + 1, r, mid + 1, qr, v);
 }
 
-//x=検索開始位置、[l,r]=対象区間l,r, [q,l]=クエリ区間ql, qr, v=検索したいクエリ行インデックス
+//x=検索開始ノード、[l,r]=対象区間l,r, [q,l]=クエリ区間ql, qr, v=検索したいクエリ行インデックス
 inline void Erase(int x, int l, int r, int ql, int qr, int v)
 {
     if (l == ql && r == qr)
@@ -67,7 +67,7 @@ inline void Erase(int x, int l, int r, int ql, int qr, int v)
         Erase(x << 1, l, mid, ql, mid, v), Erase(x << 1 | 1, mid + 1, r, mid + 1, qr, v);
 }
 
-//x=検索開始位置(座標圧縮後のx座標のインデックスで指定)、[l,r]=対象区間l,r, p=座標圧縮後のx座標(のインデックス)、v=検索したいクエリ行インデックス
+//x=検索開始ノード、[l,r]=対象区間l,r, p=座標圧縮後のx座標(のインデックス)、v=検索したいクエリ行インデックス
 inline int Query(int x, int l, int r, int p, int v)
 {
     //x軸に平行な直線と交わる円の順序つき集合から一個ずつ、クエリ行インデックスを取り出し、条件に合うか判定する。

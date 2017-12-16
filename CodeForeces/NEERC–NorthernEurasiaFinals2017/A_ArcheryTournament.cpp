@@ -13,19 +13,21 @@
 #include<algorithm>
 using namespace std;
 
+//RMQ
 class SegmentTree {
-public:
+protected:
 	int MAX_N;
-	int n, *dat;
-
+	long long n;
+	long long *dat;
+public:
 //セグメント木
-	SegmentTree(int n_){
-		MAX_N = 1<< 17;
-		dat= (int *) malloc( (2*MAX_N -1) * sizeof(int) );
+	SegmentTree(int n_) {
+		MAX_N = 1 << 17;
+		dat = (long long *) malloc((2 * MAX_N - 1) * sizeof(int));
 		init(n_);
 	}
 
-	~SegmentTree(){
+	~SegmentTree() {
 		free(dat);
 	}
 
@@ -34,12 +36,12 @@ public:
 		//要素数を2のベキ乗にする
 		while (n < n_)
 			n *= 2;
-		for (int i = 0; i < 2 * n - 1; i++)
-			dat[i] = INT_MAX;
+		for (long long i = 0; i < 2 * n - 1; i++)
+			dat[i] = LLONG_MAX;
 	}
 
 //k番目をaに変更
-	void update(int k, int a) {
+	void update(long long k, long long a) {
 		//葉のインデックス
 		k += n - 1;
 		dat[k] = a;
@@ -50,21 +52,88 @@ public:
 		}
 	}
 
-	int query(int a, int b, int k, int l, int r){
+	long long query(long long  a, long long b, long long k, long long l, long long r) {
 		//範囲にまったく交差しなければ、影響ない数字を返す
-		if(r<=a || b<= l) return INT_MAX;
+		if (r <= a || b <= l)
+			return LLONG_MAX;
 		//完全に含んでいれば、そのノードの値
-		if(a<=l && r <= b) return dat[k];
+		if (a <= l && r <= b)
+			return dat[k];
 		//そうじゃないなら、子ノードから再帰的に求める
-		else{
-			int vl = query(a, b, k*2 +1, l, (l+r)/2);
-			int vr = query(a, b, k*2 +2, (l+r)/2, r);
+		else {
+			long long vl = query(a, b, k * 2 + 1, l, (l + r) / 2);
+			long long vr = query(a, b, k * 2 + 2, (l + r) / 2, r);
 			return min(vl, vr);
+		}
+	}
+};
+//Max
+class MaxSegmentTree {
+protected:
+	int MAX_N;
+	long long n;
+	long long *dat;
+public:
+//セグメント木
+	MaxSegmentTree(int n_) {
+		MAX_N = 1 << 17;
+		dat = (long long *) malloc((2 * MAX_N - 1) * sizeof(int));
+		init(n_);
+	}
+
+	~MaxSegmentTree() {
+		free(dat);
+	}
+
+	void init(int n_) {
+		n = 1;
+		//要素数を2のベキ乗にする
+		while (n < n_)
+			n *= 2;
+		for (long long i = 0; i < 2 * n - 1; i++)
+			dat[i] = -1* LLONG_MAX;
+	}
+
+//k番目をaに変更
+	void update(long long k, long long a) {
+		//葉のインデックス
+		k += n - 1;
+		dat[k] = a;
+		//葉から根まで登りながら更新していく
+		while (k > 0) {
+			k = (k - 1) / 2;
+			dat[k] = max(dat[k * 2 + 1], dat[k * 2 + 2]);
+		}
+	}
+
+	long long query(long long  a, long long b, long long k, long long l, long long r) {
+		//範囲にまったく交差しなければ、影響ない数字を返す
+		if (r <= a || b <= l)
+			return -1*LLONG_MAX;
+		//完全に含んでいれば、そのノードの値
+		if (a <= l && r <= b)
+			return dat[k];
+		//そうじゃないなら、子ノードから再帰的に求める
+		else {
+			long long vl = query(a, b, k * 2 + 1, l, (l + r) / 2);
+			long long vr = query(a, b, k * 2 + 2, (l + r) / 2, r);
+			return max(vl, vr);
 		}
 	}
 };
 
 int main() {
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	MaxSegmentTree T(2*100000);
+
+	int num_line;
+	cin >> num_line;
+	while(num_line--){
+		long long  t, x, y;
+		cin >> t >> x >> y;
+		if(t==1){
+
+		}
+	}
+	}
 	return 0;
 }
