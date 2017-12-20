@@ -1,3 +1,8 @@
+/*
+完全二分木の巡回。
+http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_9_A
+*/
+
 #include<cstdio>
 #include<iostream>
 #include<cstdlib>

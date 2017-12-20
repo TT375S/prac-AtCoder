@@ -1,3 +1,7 @@
+/*
+二分木での二分探索
+http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_8_B
+*/
 #include<cstdio>
 #include<iostream>
 #include<cstdlib>
